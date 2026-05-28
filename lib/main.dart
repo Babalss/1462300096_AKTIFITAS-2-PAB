@@ -394,78 +394,121 @@ class _ProfileScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 10),
       child: Container(
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
         decoration: BoxDecoration(
           color: const Color(0xFFF3F3F3),
           borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: const Color(0xFFB5B5B5)),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'FOTO',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF161616),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                color: const Color(0xFFD2D3D6),
-                padding: const EdgeInsets.all(22),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 210,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(14),
-                      child: Image.network(
-                        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80',
-                        height: 220,
-                        width: 220,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, progress) {
-                          if (progress == null) return child;
-                          return const SizedBox(
-                            height: 220,
-                            width: 220,
-                            child: ColoredBox(
-                              color: Color(0xFFC0C2C8),
-                              child: Center(child: CircularProgressIndicator()),
-                            ),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            height: 220,
-                            width: 220,
-                            color: const Color(0xFFC0C2C8),
-                            child: const Icon(
-                              Icons.person,
-                              size: 90,
-                              color: Color(0xFF4B556C),
-                            ),
-                          );
-                        },
+                    const SizedBox(height: 24),
+                    const Text(
+                      'Profile',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1D1D1D),
                       ),
                     ),
-                    const SizedBox(height: 22),
-                    const Text(
-                      'Profile Pasien',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF2D3646),
+                    const SizedBox(height: 16),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF6F7F9),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.12),
+                            blurRadius: 10,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'fotoku.jpg',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(
+                              Icons.person_2_outlined,
+                              color: Color(0xFF3D86EA),
+                              size: 56,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              const _ProfileInfoRow(
+                icon: Icons.person_outline,
+                text: 'Muhammad Iqbal Alghozi',
+              ),
+              const _ProfileInfoRow(
+                icon: Icons.badge_outlined,
+                text: '1462300096',
+              ),
+              const _ProfileInfoRow(
+                icon: Icons.email_outlined,
+                text: 'ikbalalghozi@gmail.com',
+              ),
+              const _ProfileInfoRow(
+                icon: Icons.location_on_outlined,
+                text: 'Sidoarjo',
+              ),
+              const _ProfileInfoRow(
+                icon: Icons.camera_alt_outlined,
+                text: '@Alghoz.ii',
+              ),
+              const Spacer(),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _ProfileInfoRow extends StatelessWidget {
+  const _ProfileInfoRow({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 58,
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Color(0xFFBEBEBE)),
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Color(0xFF3496E8), size: 26),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF242424),
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }
